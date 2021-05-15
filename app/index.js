@@ -51,7 +51,7 @@ class application {
 
     setExpress(){
         app.listen(process.env.PORT || 3000 , '127.0.0.1', ()=>{
-            console.log(`Server Is Run In Port : ${process.env.PORT} ...`)
+            console.log(`Time : ${new Date(Date.now())}\nServer Is Run In Port : ${process.env.PORT} ...`)
         })
     }
     
