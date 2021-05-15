@@ -11,5 +11,9 @@ router.get('/', async (req,res,next)=>{
     })
 })
 
+router.get('/login', async (req,res,next)=>{
+    res.render('login-register')
+})
+
 
 module.exports = router
