@@ -5,6 +5,9 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const mongoStore = require('connect-mongo')
 const dotenv = require('dotenv').config({path:process.cwd()+'/config.env'})
+const passport = require('passport')
+const flash = require('connect-flash')
+const checkJWT = require('./middleware/checkJWT.js')
 
 const APIRoutes = require('./Routes/APIRoutes')
 const frontRoutes = require('./Routes/frontRoutes')
@@ -33,14 +36,17 @@ class application {
         app.use(session({
             secret : process.env.SESSION_SECRET,
             resave : true,
-            saveUninitialized : true,
+            saveUninitialized : false,
             cookie : {httpOnly:true , maxAge:24*60*60*1000},
             store :  mongoStore.create({mongoUrl:process.env.MONGODB_URL})
         }))
         app.set('views',process.cwd()+'/src/views')
         app.set('view engine','ejs')
         app.use(express.static(process.cwd()+'/src/public'))
-
+        app.use(flash())
+        app.use(passport.initialize());
+        app.use(passport.session());    
+        app.use(checkJWT)
     }   
 
     setRoute(){

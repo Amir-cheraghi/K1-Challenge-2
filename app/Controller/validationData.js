@@ -42,8 +42,8 @@ module.exports = new class Validation{
         .withMessage('Password Must Be Between 8 And 32 Character')
         .custom((input,{req})=>{return input===req.body.repassword})
         .withMessage('Password Is Not Same'),
-        check('phone')
-        .matches(/^(\+989|9|09)(12|19|35|36|37|38|39|32|21|01|10)\d{7}$/)
+        check('phoneNumber')
+        .matches(/^(\+989|9|09|98)(12|19|35|36|37|38|39|32|21|01|10)\d{7}$/)
         .withMessage('Your Mobile Phone Number Is Not Valid (Only Iranian Mobile Phone Supported)')
         ]
     }

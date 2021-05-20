@@ -6,10 +6,10 @@ module.exports = new class taskController{
 
     async showAllTask(req,res,next){
         try{
-        const tasks = await Task.find()
+        const tasks = await Task.find({creator : req.user._id})
         res.json({
             status : "Success",
-            data : tasks
+            data : tasks.length != 0  ? tasks : 'There is not Any task please create one .'
         })
         } catch(err){
             console.log(err)
@@ -42,6 +42,7 @@ module.exports = new class taskController{
         try {
             
             const task = await Task.create({
+                creator : req.user._id,
                 name : req.body.name,
                 type : req.body.type,
                 description : req.body.description
