@@ -24,8 +24,15 @@ router.route('/api/user/register')
 router.route('/api/user/logout')
 .get(checkLogin,authController.logout)
 
+router.route('/api/user/resetpassword')
+.post(validationData.resetPasswordValid(),validationData.resetPasswordValidation,authController.resetPassword)
+
+router.route('/api/user/resetpassword/:token')
+.get(authController.resetPasswordShow)
+.post(validationData.validResetPasswordField(),validationData.validationResetPasswordField,authController.resetPasswordProcess)
+
 router.route('/api/user/result')
-.get(checkLogin,authController.sendResult)
+.get(authController.sendResult)
 
 
 module.exports = router

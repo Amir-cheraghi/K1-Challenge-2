@@ -8,8 +8,10 @@ const userSchema = new mongoose.Schema({
     phoneNumber : {type : String},
     password : {type : String , required : true },
     passwordToken : {type : String},
-    passwordTokenExpire : {type : Date}
+    passwordTokenExpire : {type : Date},
+    passwordChangeDate : {type : Date}
 },{timestamps:true})
+
 userSchema.pre('save',async function (next){
     if(this.isModified('password'))
     this.password =await bcrypt.hash(this.password,10)

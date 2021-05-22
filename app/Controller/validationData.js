@@ -60,4 +60,47 @@ module.exports = new class Validation{
         else next()
         
     }
+
+
+    resetPasswordValid(req,res,next){
+        return [
+            check('email' , 'The Entered Email Is Not Valid').isEmail()
+        ]
+    }
+
+    resetPasswordValidation(req,res,next){
+        const check = validationResult(req).array()
+        if (check.length !=  0){
+            const msg = check.map((el)=>{return el.msg})
+            return res.json ({
+                status : 'validation error',
+                msg
+            })
+        }
+        next()
+    }
+
+    validResetPasswordField(req){
+        return[
+        check('password')
+        .isLength({min:8 , max:32})
+        .withMessage('Password Must Be Between 8 And 32 Character')
+        .custom((input,{req})=>{return input===req.body.repassword})
+        .withMessage('Password Is Not Same'),
+        check('repassword')
+        .notEmpty()
+        .withMessage('Please Confrim Your Password')
+        ]
+    }
+    validationResetPasswordField(req,res,next){
+        const check = validationResult(req).array()
+        if(check.length != 0) {
+            const msg = check.map(el=>el.msg)
+            return res.json ({
+                status : 'validation error',
+                msg
+            })
+        }
+        next()
+    }
 }
